@@ -35,24 +35,29 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
 
-            const { email, password } = req.body;
+            try {
+                        const { email, password } = req.body;
 
-            console.log(email, password)
-            const isEmailExist = await User.findOne({ email })
-            if (!isEmailExist) return res.status(404).json({ success: false, message: "Email is dosen't exist" })
+                        console.log(email, password)
+                        const isEmailExist = await User.findOne({ email })
+                        if (!isEmailExist) return res.status(404).json({ success: false, message: "Email is dosen't exist" })
 
-            const isPasswordMatch = await bcrypt.compare(password, isEmailExist.password)
-            if (!isPasswordMatch) return res.status(400).json({ success: false, message: "Invalid password" })
+                        const isPasswordMatch = await bcrypt.compare(password, isEmailExist.password)
+                        if (!isPasswordMatch) return res.status(400).json({ success: false, message: "Invalid password" })
 
-            const token = jwt.sign({ id: isEmailExist._id }, process.env.SECRET_KEY, { expiresIn: "1h" })
+                        const token = jwt.sign({ id: isEmailExist._id }, process.env.SECRET_KEY, { expiresIn: "1h" })
 
 
-            res.cookie("token", token, {
-                        httpOnly: true,
-                        expiresIn: new Date(Date.now() + 1000 * 60 * 60)
-            })
+                        res.cookie("token", token, {
+                                    httpOnly: true,
+                                    expiresIn: new Date(Date.now() + 1000 * 60 * 60)
+                        })
 
-            return res.status(200).json({ success: true, message: "Login Successfully", isEmailExist })
+                        return res.status(200).json({ success: true, message: "Login Successfully", isEmailExist })
+            }
+            catch (error) {
+                        return res.status(500).json({ success: false, message: "internal server error", error })
+            }
 
 }
 
