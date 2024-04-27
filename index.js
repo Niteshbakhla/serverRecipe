@@ -12,7 +12,7 @@ connectDB()
 app.use(cookieparser())
 app.use(express.json())
 app.use(cors({
-            origin: "https://serverauth.netlify.app",
+            origin: "http://localhost:5173",
             credentials: true
 }))
 app.use("/api", router)
