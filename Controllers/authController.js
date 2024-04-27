@@ -1,4 +1,4 @@
-const User = require("../Schema/user");
+// const User = require("../Schema/user");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -48,10 +48,10 @@ exports.login = async (req, res) => {
                         // const token = jwt.sign({ id: isEmailExist._id }, process.env.SECRET_KEY, { expiresIn: "1h" })
 
 
-                        res.cookie("token", token, {
-                                    httpOnly: true,
-                                    expiresIn: new Date(Date.now() + 1000 * 60 * 60)
-                        })
+                        // res.cookie("token", token, {
+                        //             httpOnly: true,
+                        //             expiresIn: new Date(Date.now() + 1000 * 60 * 60)
+                        // })
 
                         return res.status(200).json({ success: true, message: "Login Successfully", isEmailExist })
             }
