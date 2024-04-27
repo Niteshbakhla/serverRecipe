@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
                         const isPasswordMatch = await bcrypt.compare(password, isEmailExist.password)
                         if (!isPasswordMatch) return res.status(400).json({ success: false, message: "Invalid password" })
 
-                        const token = jwt.sign({ id: isEmailExist._id }, process.env.SECRET_KEY, { expiresIn: "1h" })
+                        // const token = jwt.sign({ id: isEmailExist._id }, process.env.SECRET_KEY, { expiresIn: "1h" })
 
 
                         res.cookie("token", token, {
